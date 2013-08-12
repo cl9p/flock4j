@@ -1,0 +1,109 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+
+@font-face {
+  font-family: 'MuseoSlabThin';
+  src: url('/static/fonts/museo_slab_300-webfont.eot');
+  src: url('/static/fonts/museo_slab_300-webfont.eot?#iefix') format('embedded-opentype'),
+	   url('/static/fonts/museo_slab_300-webfont.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'MuseoSlabThick';
+  src: url('/static/fonts/proximanova-webfont.eot');
+  src: url('/static/fonts/proximanova-webfont.eot?#iefix') format('embedded-opentype'),
+	   url('/static/fonts/proximanova-webfont.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'ProximaNova';
+  src: url('/static/fonts/museo_slab_500-webfont.eot');
+  src: url('/static/fonts/museo_slab_500-webfont.eot?#iefix') format('embedded-opentype'),
+	   url('/static/fonts/museo_slab_500-webfont.ttf') format('truetype');
+}
+
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+div.navbar {
+  font-family: MuseoSlabThin, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+div.navbar.navbar-fixed-bottom {
+  font-family: MuseoSlabThin, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #1eb0f0;
+  height: 40px;
+  padding-top: 10px;
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -30px;
+  padding: 0 0 30px;
+}
+
+pre {
+  max-height: 200px !important;
+  overflow: scroll;
+}
+
+p.credit {
+  font-family: MuseoSlabThin, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: white;  
+}
+
+img {
+    float: right;
+    margin-top: -40px;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+  #footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+#execution_response {
+	margin-top: 10px;
+	padding-top: 5px;
+	border-top: 1px solid #eeeeee;
+}
+
+#wrap > .container {
+  padding: 60px 15px 0;
+}
+
+@media screen and (min-width: 768px) {
+  .modal-dialog {
+    right: auto;
+    left: 50%;
+    width: 80%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-left: -40%;
+  }
+  .modal-content {
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+}
+div#workflowModal {    
+    width: 80%;
+    margin-left: -40%;
+    left: 50%;
+}
+
+div.page-header {
+	margin-top: -20px;
+}
