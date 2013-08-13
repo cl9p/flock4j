@@ -1,19 +1,22 @@
 package com.cl9p.services;
 
+import ch.ethz.ssh2.Connection;
+import ch.ethz.ssh2.Session;
+import ch.ethz.ssh2.StreamGobbler;
 import com.cl9p.model.Command;
-import net.schmizz.sshj.SSHClient;
-import net.schmizz.sshj.common.IOUtils;
-import net.schmizz.sshj.connection.channel.direct.Session;
-import net.schmizz.sshj.transport.verification.HostKeyVerifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.security.PublicKey;
-import java.util.concurrent.TimeUnit;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class CommandServiceImpl {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
    private MongoTemplate mongoTemplate;
 
@@ -23,30 +26,30 @@ public class CommandServiceImpl {
     }
 
     public String execute(Command command) throws IOException {
-        SSHClient client = new SSHClient();
-        StringBuffer result = new StringBuffer();
-        try {
-            client.addHostKeyVerifier(new HostKeyVerifier() {
-                @Override
-                public boolean verify(String s, int i, PublicKey publicKey) {
-                    return true;
-                }
-            });
-            client.connect("192.168.60.135");
-            client.authPassword("root", "password");
-            Session session = client.startSession();
-            try {
-                session.allocateDefaultPTY();
-                Session.Command cmd = session.exec("ls -la /root");
-                result.append(IOUtils.readFully(cmd.getInputStream()).toString());
-                cmd.join(5, TimeUnit.SECONDS);
-                result.append("\n** Exit Status: " + cmd.getExitStatus());
-            } finally {
-                session.close();
-            }
-        } finally {
-          client.disconnect();
-        }
-        return result.toString();
+        Connection connection = new Connection(command.getServer());
+        connection.connect();
+        boolean isAuthenticated = connection.authenticateWithPassword("lfaus", command.getPassword());
+        logger.info("authenticated? " + isAuthenticated);
+        Session session = connection.openSession();
+        session.requestPTY("vt220");
+        logger.info("got PTY");
+        session.getStdin().write("sudo ls -la /root".getBytes());
+
+//        session.getStdin().write("password".getBytes());
+        logger.info("running sudo");
+        InputStream stdout = new StreamGobbler(session.getStdout());
+        logger.info("got stdout");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stdout));
+        logger.info("got buffered reader");
+        StringBuffer stringBuffer = new StringBuffer();
+//        String result = bufferedReader.readLine();
+//        while ((result = bufferedReader.readLine()) != null) {
+//            // here we could check for sudo
+//            stringBuffer.append(result + "\n");
+//        }
+        session.getStdin().write("password".getBytes());
+        session.close();
+        connection.close();
+        return stringBuffer.toString();
     }
 }

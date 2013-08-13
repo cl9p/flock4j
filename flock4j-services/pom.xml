@@ -87,9 +87,9 @@
             <version>5.1-beta</version>
         </dependency>
         <dependency>
-            <groupId>net.schmizz</groupId>
-            <artifactId>sshj</artifactId>
-            <version>0.8.1</version>
+            <groupId>ch.ethz.ganymed</groupId>
+            <artifactId>ganymed-ssh2</artifactId>
+            <version>261</version>
         </dependency>
 
         <!-- JSR 303 validation -->
