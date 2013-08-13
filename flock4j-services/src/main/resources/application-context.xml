@@ -9,5 +9,6 @@
     <context:annotation-config />
 
     <import resource="classpath:flock4j-services-context.xml"/>
+    <import resource="classpath:flock4j-mongodb-context.xml"/>
 
 </beans>

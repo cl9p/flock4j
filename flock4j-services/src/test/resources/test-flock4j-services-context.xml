@@ -6,5 +6,7 @@
     <import resource="classpath:application-context.xml" />
 
     <bean id="virtualMachineManagementService" class="com.cl9p.services.VirtualMachineManagementServiceImpl" />
+    <bean id="command" class="com.cl9p.model.Command" />
+    <bean id="commandService" class="com.cl9p.services.CommandServiceImpl" />
 
 </beans>

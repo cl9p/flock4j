@@ -5,12 +5,22 @@ import net.schmizz.sshj.SSHClient;
 import net.schmizz.sshj.common.IOUtils;
 import net.schmizz.sshj.connection.channel.direct.Session;
 import net.schmizz.sshj.transport.verification.HostKeyVerifier;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.io.IOException;
 import java.security.PublicKey;
 import java.util.concurrent.TimeUnit;
 
 public class CommandServiceImpl {
+    @Autowired
+   private MongoTemplate mongoTemplate;
+
+    public String create(Command command) {
+        mongoTemplate.save(command);
+        return "saved";
+    }
 
     public String execute(Command command) throws IOException {
         SSHClient client = new SSHClient();

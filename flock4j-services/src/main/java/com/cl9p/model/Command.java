@@ -1,5 +1,8 @@
 package com.cl9p.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "commands")
 public class Command {
     private String server;
     private String user;

@@ -1,4 +1,4 @@
-package com.cl9p.test.services;
+package com.cl9p.services;
 
 import com.cl9p.services.VirtualMachineManagementServiceImpl;
 import org.junit.After;
